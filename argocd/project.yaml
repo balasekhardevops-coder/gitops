@@ -10,8 +10,13 @@ spec:
     - https://github.com/balasekhardevops-coder/gitops.git
 
   destinations:
+    # Docker Desktop cluster where Argo CD runs
     - namespace: eks-python-dev
       server: https://kubernetes.default.svc
+
+    # Registered EKS cluster
+    - namespace: eks-python-dev
+      name: eks-python-dev
 
   clusterResourceWhitelist:
     - group: ""
