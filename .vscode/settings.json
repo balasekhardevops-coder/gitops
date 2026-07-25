@@ -1,0 +1,15 @@
+{
+  "files.associations": {
+    "**/templates/*.yaml": "helm-template",
+    "**/templates/*.yml": "helm-template",
+    "**/templates/*.tpl": "helm-template"
+  },
+
+  "[helm-template]": {
+    "editor.formatOnSave": false
+  },
+
+  "prettier.disableLanguages": [
+    "helm-template"
+  ]
+}

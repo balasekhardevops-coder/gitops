@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: eks-python-platform
+  namespace: argocd
+spec:
+  description: EKS Python platform applications
+
+  sourceRepos:
+    - https://github.com/balasekhardevops-coder/eks-python-gitops.git
+
+  destinations:
+    - namespace: eks-python-dev
+      server: https://kubernetes.default.svc
+
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"

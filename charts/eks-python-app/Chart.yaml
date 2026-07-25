@@ -1,0 +1,7 @@
+apiVersion: v2
+name: eks-python-app
+description: Helm Chart for eks-python Application
+type: application
+
+version: 0.1.0
+appVersion: "1.0.0"

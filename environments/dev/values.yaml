@@ -1,0 +1,19 @@
+replicaCount: 1
+
+image:
+  repository: 758854589827.dkr.ecr.us-east-1.amazonaws.com/dev/eks-python-app
+  tag: "9-fd7654aa"
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 300m
+    memory: 256Mi
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080

@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: eks-python-app-dev
+  namespace: argocd
+spec:
+  project: eks-python-platform
+
+  source:
+    repoURL: https://github.com/balasekhardevops-coder/gitops.git
+    targetRevision: main
+    path: charts/eks-python-app
+
+    helm:
+      releaseName: eks-python-app-dev
+
+      valueFiles:
+        - ../../environments/dev/values.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: eks-python-dev
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=true
+      - PruneLast=true
