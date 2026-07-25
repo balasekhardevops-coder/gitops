@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: 758854589827.dkr.ecr.us-east-1.amazonaws.com/dev/eks-python-app
-  tag: "9-fd7654aa"
+  tag: 11-d1ea6e9b
   pullPolicy: IfNotPresent
 
 resources:
