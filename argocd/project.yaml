@@ -7,7 +7,7 @@ spec:
   description: EKS Python platform applications
 
   sourceRepos:
-    - https://github.com/balasekhardevops-coder/eks-python-gitops.git
+    - https://github.com/balasekhardevops-coder/gitops.git
 
   destinations:
     - namespace: eks-python-dev
