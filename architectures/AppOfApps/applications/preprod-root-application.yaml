@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/vqalpha1
+kind: Application
+metadata:
+    name: preprod-root-application
+spec:
+    source:
+        repoURL: https://github.com/your-org/gitops.git
+        targetRevision: main
+        path: architectures/AppOfApps/preprod
+    destination:
+        server: https://preprod-kubernetes.default.svc
+        namespace: argocd
+
+    syncPlicy:
+        automated:
+            prune: true
+            selfHeal: true
+        
+        syncOptions:
+            - CreateNamespace=true

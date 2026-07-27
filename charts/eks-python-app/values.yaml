@@ -9,8 +9,9 @@ nameOverride: ""
 fullNameOverride: ""
 
 serviceAccount:
-    create: true
-    name: ""
+  create: true
+  name: ""
+  annotations: {}
 
 service:
   port: 80
@@ -48,4 +49,3 @@ nodeSelector: {}
 tolerations: {}
 
 affinity: {}
-

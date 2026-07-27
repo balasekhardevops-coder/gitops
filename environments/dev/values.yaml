@@ -17,3 +17,9 @@ service:
   type: ClusterIP
   port: 80
   targetPort: 8080
+
+serviceAccount:
+  create: true
+  name: eks-python-app
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::758854589827:role/eks-python-dev-pod-s3-access
