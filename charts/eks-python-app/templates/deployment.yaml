@@ -4,6 +4,7 @@ metadata:
   name: {{ include "eks-python-app.fullname" . }}
   labels:
     {{- include "eks-python-app.labels" . | nindent 4 }}
+
 spec:
   replicas: {{ .Values.replicaCount }}
 
@@ -37,6 +38,31 @@ spec:
             - name: http
               containerPort: {{ .Values.containerPort }}
               protocol: TCP
+
+          env:
+            - name: ENVIRONMENT
+              value: {{ .Values.environment | quote }}
+
+            - name: APP_VERSION
+              value: {{ .Values.image.tag | quote }}
+
+            - name: PORT
+              value: {{ .Values.containerPort | quote }}
+
+            - name: AWS_REGION
+              value: {{ .Values.aws.region | quote }}
+
+            - name: AWS_DEFAULT_REGION
+              value: {{ .Values.aws.region | quote }}
+
+            - name: S3_BUCKET_NAME
+              value: {{ .Values.aws.s3.bucketName | quote }}
+
+            - name: S3_OBJECT_KEY
+              value: {{ .Values.aws.s3.objectKey | quote }}
+
+            - name: SECRET_NAME
+              value: {{ .Values.aws.secretsManager.secretName | quote }}
 
           {{- if .Values.readinessProbe.enabled }}
           readinessProbe:

@@ -1,9 +1,13 @@
+environment: dev
+
 replicaCount: 1
 
 image:
   repository: 758854589827.dkr.ecr.us-east-1.amazonaws.com/dev/eks-python-app
   tag: 11-d1ea6e9b
   pullPolicy: IfNotPresent
+
+containerPort: 9010
 
 resources:
   requests:
@@ -16,10 +20,10 @@ resources:
 service:
   type: ClusterIP
   port: 80
-  targetPort: 8080
+  targetPort: 9010
 
 serviceAccount:
   create: true
   name: eks-python-app
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::758854589827:role/eks-python-dev-pod-s3-access
+    eks.amazonaws.com/role-arn: arn:aws:iam::758854589827:role/eks-python-dev-application-pod-role

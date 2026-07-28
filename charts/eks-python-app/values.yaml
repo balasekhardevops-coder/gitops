@@ -3,7 +3,7 @@ replicaCount: 3
 image:
   repository: 758854589827.dkr.ecr.us-east-1.amazonaws.com/dev/eks-python-app
   tag: 25-a1b2c3d4
-  policy: IfNotPresent
+  pullPolicy: IfNotPresent
 
 nameOverride: ""
 fullNameOverride: ""
@@ -15,10 +15,10 @@ serviceAccount:
 
 service:
   port: 80
-  targetPort: 8080
+  targetPort: 9010
   type: ClusterIP
 
-containerPort: 8080
+containerPort: 9010
 
 resources:
   requests:
@@ -49,3 +49,13 @@ nodeSelector: {}
 tolerations: {}
 
 affinity: {}
+
+aws:
+  region: us-east-1
+
+  s3:
+    bucketName: thebalabanana.store
+    objectKey: application/config.json
+
+  secretsManager:
+    secretName: eks-python-dev/eks-python-app

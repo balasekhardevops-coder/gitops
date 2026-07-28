@@ -1,9 +1,13 @@
+environment: qa
+
 replicaCount: 2
 
 image:
   repository: 758854589827.dkr.ecr.us-east-1.amazonaws.com/qa/eks-python-app
   tag: "1.0.0"
   pullPolicy: IfNotPresent
+
+containerPort: 9010
 
 resources:
   requests:
@@ -12,3 +16,8 @@ resources:
   limits:
     cpu: 500m
     memory: 512Mi
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 9010
