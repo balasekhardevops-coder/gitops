@@ -5,11 +5,13 @@ metadata:
   labels:
     {{- include "eks-python-app.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: ClusterIP
+
   selector:
     {{- include "eks-python-app.selectorLabels" . | nindent 4 }}
+
   ports:
     - name: http
+      port: 9010
+      targetPort: http
       protocol: TCP
-      port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.targetPort }}

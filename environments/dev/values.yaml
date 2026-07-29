@@ -4,7 +4,7 @@ replicaCount: 1
 
 image:
   repository: 758854589827.dkr.ecr.us-east-1.amazonaws.com/dev/eks-python-app
-  tag: 11-d1ea6e9b
+  tag: 16-84ec62d3
   pullPolicy: IfNotPresent
 
 containerPort: 9010
@@ -17,13 +17,42 @@ resources:
     cpu: 300m
     memory: 256Mi
 
-service:
-  type: ClusterIP
-  port: 80
-  targetPort: 9010
-
 serviceAccount:
   create: true
   name: eks-python-app
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::758854589827:role/eks-python-dev-application-pod-role
+service:
+  type: ClusterIP
+  port: 9010
+  targetPort: http
+
+ingress:
+  enabled: true
+
+  # Internet-facing ALB.
+  scheme: internet-facing
+
+  # ALB sends traffic directly to pod IP addresses.
+  targetType: ip
+
+  # Leave empty until Route 53 DNS is configured.
+  host: ""
+
+  listenPorts:
+    - HTTP: 80
+
+  healthCheck:
+    path: /health/ready
+    port: traffic-port
+    protocol: HTTP
+    intervalSeconds: "15"
+    healthyThreshold: "2"
+    unhealthyThreshold: "3"
+    successCodes: "200"
+
+  annotations:
+    alb.ingress.kubernetes.io/load-balancer-name: eks-python-dev-alb
+
+    alb.ingress.kubernetes.io/tags: >-
+      Environment=dev,Application=eks-python-app,ManagedBy=ArgoCD

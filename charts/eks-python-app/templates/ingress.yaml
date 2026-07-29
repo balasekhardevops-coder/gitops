@@ -1,0 +1,56 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: {{ include "eks-python-app.fullname" . }}
+
+  labels:
+    {{- include "eks-python-app.labels" . | nindent 4 }}
+
+  annotations:
+    alb.ingress.kubernetes.io/scheme: {{ .Values.ingress.scheme | quote }}
+
+    alb.ingress.kubernetes.io/target-type: {{ .Values.ingress.targetType | quote }}
+
+    alb.ingress.kubernetes.io/listen-ports: >-
+      {{ .Values.ingress.listenPorts | toJson | quote }}
+
+    alb.ingress.kubernetes.io/healthcheck-path: {{ .Values.ingress.healthCheck.path | quote }}
+
+    alb.ingress.kubernetes.io/healthcheck-port: {{ .Values.ingress.healthCheck.port | quote }}
+
+    alb.ingress.kubernetes.io/healthcheck-protocol: {{ .Values.ingress.healthCheck.protocol | quote }}
+
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: {{ .Values.ingress.healthCheck.intervalSeconds | quote }}
+
+    alb.ingress.kubernetes.io/healthy-threshold-count: {{ .Values.ingress.healthCheck.healthyThreshold | quote }}
+
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: {{ .Values.ingress.healthCheck.unhealthyThreshold | quote }}
+
+    alb.ingress.kubernetes.io/success-codes: {{ .Values.ingress.healthCheck.successCodes | quote }}
+
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+
+spec:
+  ingressClassName: alb
+
+  rules:
+    - {{- if .Values.ingress.host }}
+      host: {{ .Values.ingress.host | quote }}
+      {{- end }}
+
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+
+            backend:
+              service:
+                name: {{ include "eks-python-app.fullname" . }}
+
+                port:
+                  number: {{ .Values.service.port }}
+{{- end }}
