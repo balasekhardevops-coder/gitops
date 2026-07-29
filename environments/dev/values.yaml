@@ -1,6 +1,6 @@
 environment: dev
 
-replicaCount: 1
+replicaCount: 3
 
 image:
   repository: 758854589827.dkr.ecr.us-east-1.amazonaws.com/dev/eks-python-app
